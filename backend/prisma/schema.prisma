@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+enum Sport {
+  RUNNING
+  WALKING
+  CYCLING
+  SWIMMING
+  GYM
+  DAILY_STEPS
+}
+
+enum MetricUnit {
+  KM
+  MINUTES
+  STEPS
+}
+
+model User {
+  id         String     @id @default(cuid())
+  firstName  String
+  lastName   String
+  email      String?
+  createdAt  DateTime   @default(now())
+
+  activities Activity[]
+
+  @@unique([firstName, lastName])
+}
+
+model Activity {
+  id         String     @id @default(cuid())
+  userId     String
+  sport      Sport
+  unit       MetricUnit
+  value      Float
+  points     Int
+  recordedAt DateTime   @default(now())
+  createdAt  DateTime   @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([sport])
+  @@index([recordedAt])
+}

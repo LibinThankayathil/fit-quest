@@ -1,1 +1,13 @@
 node_modules
+/src/generated/prisma
+
+# Prisma & Environment
+.env
+dev.db
+dev.db-journal
+
+# Agent skills
+.claude/
+.windsurf/
+.agents/
+skills-lock.json
