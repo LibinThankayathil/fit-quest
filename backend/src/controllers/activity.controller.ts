@@ -37,3 +37,18 @@ export const createActivity = async (
     next(error);
   }
 };
+
+export const getUserActivities = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { id: userId } = (req as AuthenticatedRequest).user;
+    const activities = await activityService.getUserActivities(userId);
+
+    return sendSuccess(res, 200, { activities });
+  } catch (error) {
+    next(error);
+  }
+};

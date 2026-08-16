@@ -3,6 +3,16 @@ import { prisma } from "../../lib/prisma";
 import { calculatePoints, getMetricCategory } from "../utils/scoring";
 import type { CreateActivityInput } from "../validators/activity.validator";
 
+const publicActivitySelect = {
+  id: true,
+  sport: true,
+  unit: true,
+  value: true,
+  points: true,
+  recordedAt: true,
+  createdAt: true,
+} as const;
+
 /**
  * Extracts the raw numeric value and determines the storage unit
  * from validated input based on the sport's metric category.
@@ -33,16 +43,16 @@ export async function createActivity(userId: string, input: CreateActivityInput)
       points,
       ...(input.recordedAt ? { recordedAt: new Date(input.recordedAt) } : {}),
     },
-    select: {
-      id: true,
-      sport: true,
-      unit: true,
-      value: true,
-      points: true,
-      recordedAt: true,
-      createdAt: true,
-    },
+    select: publicActivitySelect,
   });
 
   return activity;
+}
+
+export async function getUserActivities(userId: string) {
+  return prisma.activity.findMany({
+    where: { userId },
+    orderBy: { recordedAt: "desc" },
+    select: publicActivitySelect,
+  });
 }
