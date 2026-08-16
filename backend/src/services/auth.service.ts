@@ -31,27 +31,25 @@ export const register = async (input: RegisterInput) => {
 };
 
 export const login = async (input: LoginInput) => {
-  const user = await prisma.user.findUnique({
+  // Fetch only what we need for password verification
+  const userWithHash = await prisma.user.findUnique({
     where: { email: input.email },
+    select: { ...publicUserSelect, passwordHash: true },
   });
 
-  if (!user || !(await verifyPassword(input.password, user.passwordHash))) {
+  if (
+    !userWithHash ||
+    !(await verifyPassword(input.password, userWithHash.passwordHash))
+  ) {
     return null;
   }
 
+  // Strip passwordHash before returning — the rest matches publicUserSelect exactly
+  const { passwordHash: _, ...user } = userWithHash;
+
   const accessToken = signAccessToken(user.id);
 
-  return {
-    user: {
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
-    },
-    accessToken,
-  };
+  return { user, accessToken };
 };
 
 export const getCurrentUser = async (userId: string) =>

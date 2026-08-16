@@ -1,9 +1,9 @@
-import type { CookieOptions, Request, Response } from "express";
-import { Prisma } from "../../generated/prisma/client";
+import type { CookieOptions, NextFunction, Request, Response } from "express";
 import * as authService from "../services/auth.service";
+import type { AuthenticatedRequest } from "../types/express.d";
+import { ACCESS_TOKEN_COOKIE } from "../utils/constants";
+import { sendError, sendSuccess } from "../utils/response";
 import { loginSchema, registerSchema } from "../validators/auth.validator";
-
-const ACCESS_TOKEN_COOKIE = "accessToken";
 
 const accessTokenCookieOptions: CookieOptions = {
   httpOnly: true,
@@ -13,133 +13,87 @@ const accessTokenCookieOptions: CookieOptions = {
   path: "/",
 };
 
-const formatValidationErrors = (issues: { path: PropertyKey[]; message: string }[]) =>
+const formatValidationErrors = (
+  issues: { path: PropertyKey[]; message: string }[],
+) =>
   issues.map((issue) => ({
     field: issue.path.join("."),
     message: issue.message,
   }));
 
-const getDuplicateMessage = (error: Prisma.PrismaClientKnownRequestError) => {
-  const target = error.meta?.target;
-
-  if (Array.isArray(target)) {
-    if (target.includes("email")) {
-      return "A user with this email already exists";
-    }
-
-    if (target.includes("firstName") && target.includes("lastName")) {
-      return "A user with this first and last name already exists";
-    }
-  }
-
-  return "User already exists";
-};
-
-export const register = async (req: Request, res: Response) => {
+export const register = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const result = registerSchema.safeParse(req.body);
 
   if (!result.success) {
-    return res.status(400).json({
-      success: false,
-      message: "Validation failed",
-      errors: formatValidationErrors(result.error.issues),
-    });
+    return sendError(
+      res,
+      400,
+      "Validation failed",
+      formatValidationErrors(result.error.issues),
+    );
   }
 
   try {
     const { user, accessToken } = await authService.register(result.data);
-
     res.cookie(ACCESS_TOKEN_COOKIE, accessToken, accessTokenCookieOptions);
-
-    return res.status(201).json({
-      success: true,
-      data: {
-        userId: user.id,
-        user,
-      },
-    });
+    return sendSuccess(res, 201, { user });
   } catch (error) {
-    if (
-      error instanceof Prisma.PrismaClientKnownRequestError &&
-      error.code === "P2002"
-    ) {
-      return res.status(409).json({
-        success: false,
-        message: getDuplicateMessage(error),
-      });
-    }
-
-    console.error(error);
-    return res.status(500).json({
-      success: false,
-      message: "Internal server error",
-    });
+    next(error);
   }
 };
 
-export const login = async (req: Request, res: Response) => {
+export const login = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const result = loginSchema.safeParse(req.body);
 
   if (!result.success) {
-    return res.status(400).json({
-      success: false,
-      message: "Validation failed",
-      errors: formatValidationErrors(result.error.issues),
-    });
+    return sendError(
+      res,
+      400,
+      "Validation failed",
+      formatValidationErrors(result.error.issues),
+    );
   }
 
   try {
     const authResult = await authService.login(result.data);
 
     if (!authResult) {
-      return res.status(401).json({
-        success: false,
-        message: "Invalid email or password",
-      });
+      return sendError(res, 401, "Invalid email or password");
     }
 
-    res.cookie(
-      ACCESS_TOKEN_COOKIE,
-      authResult.accessToken,
-      accessTokenCookieOptions,
-    );
-
-    return res.status(200).json({
-      success: true,
-      data: {
-        userId: authResult.user.id,
-        user: authResult.user,
-      },
-    });
+    res.cookie(ACCESS_TOKEN_COOKIE, authResult.accessToken, accessTokenCookieOptions);
+    return sendSuccess(res, 200, { user: authResult.user });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      success: false,
-      message: "Internal server error",
-    });
+    next(error);
   }
 };
 
-export const getMe = async (req: Request, res: Response) => {
+export const getMe = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
-    const user = await authService.getCurrentUser(req.user!.id);
+    // req.user is guaranteed non-null here because the `authenticate`
+    // middleware runs before this handler. We cast to AuthenticatedRequest
+    // to make that contract explicit without a ! assertion.
+    const { id } = (req as AuthenticatedRequest).user;
+    const user = await authService.getCurrentUser(id);
 
     if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found",
-      });
+      return sendError(res, 404, "User not found");
     }
 
-    return res.status(200).json({
-      success: true,
-      data: { user },
-    });
+    return sendSuccess(res, 200, { user });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      success: false,
-      message: "Internal server error",
-    });
+    next(error);
   }
 };
