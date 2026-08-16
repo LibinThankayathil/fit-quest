@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import swaggerUi from "swagger-ui-express";
-import { openapiSpec } from "./docs/openapi";
+import { openapiSpec } from "./docs/swagger";
 import authRoutes from "./routes/auth.routes";
 
 const app = express();
