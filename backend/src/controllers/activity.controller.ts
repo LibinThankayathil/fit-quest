@@ -52,3 +52,24 @@ export const getUserActivities = async (
     next(error);
   }
 };
+
+export const deleteActivity = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { id: userId } = (req as AuthenticatedRequest).user;
+    const { id } = req.params as { id?: string };
+
+    if (!id) {
+      return sendError(res, 400, "Activity ID is required");
+    }
+
+    await activityService.deleteActivity(userId, id);
+
+    return sendSuccess(res, 200, { message: "Activity deleted successfully" });
+  } catch (error) {
+    next(error);
+  }
+};

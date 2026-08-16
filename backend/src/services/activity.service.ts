@@ -1,5 +1,6 @@
 import { MetricUnit, Sport } from "../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
+import { AppError } from "../utils/AppError";
 import { calculatePoints, getMetricCategory } from "../utils/scoring";
 import type { CreateActivityInput } from "../validators/activity.validator";
 
@@ -54,5 +55,24 @@ export async function getUserActivities(userId: string) {
     where: { userId },
     orderBy: { recordedAt: "desc" },
     select: publicActivitySelect,
+  });
+}
+
+export async function deleteActivity(userId: string, activityId: string) {
+  const activity = await prisma.activity.findUnique({
+    where: { id: activityId },
+    select: { id: true, userId: true },
+  });
+
+  if (!activity) {
+    throw new AppError(404, "Activity not found");
+  }
+
+  if (activity.userId !== userId) {
+    throw new AppError(403, "You do not have permission to delete this activity");
+  }
+
+  await prisma.activity.delete({
+    where: { id: activityId },
   });
 }
