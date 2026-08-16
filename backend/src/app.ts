@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import swaggerUi from "swagger-ui-express";
 import { openapiSpec } from "./docs/swagger";
 import authRoutes from "./routes/auth.routes";
+import activityRoutes from "./routes/activity.routes";
 import { errorHandler } from "./middleware/error.middleware";
 
 const app = express();
@@ -28,6 +29,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openapiSpec));
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/activities", activityRoutes);
 
 app.get("/api/health", (_req, res) => {
   res.json({
