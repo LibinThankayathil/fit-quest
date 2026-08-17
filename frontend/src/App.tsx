@@ -41,7 +41,7 @@ const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   }
 
   if (user) {
-    return <Navigate to="/activities" replace />;
+    return <Navigate to="/dashboard" replace />;
   }
 
   return <>{children}</>;

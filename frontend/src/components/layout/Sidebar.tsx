@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutGrid,
   Dumbbell,
@@ -24,6 +24,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const { logout } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const navItems = [
     { label: 'Dashboard', path: '/dashboard', icon: LayoutGrid },
@@ -110,6 +111,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <button
             type="button"
             onClick={() => {
+              navigate('/activities');
               if (onOpenLogModal) {
                 onOpenLogModal();
               }
