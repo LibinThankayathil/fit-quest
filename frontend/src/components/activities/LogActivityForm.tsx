@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Calendar, ArrowRight, CheckCircle2, AlertCircle, ChevronDown } from 'lucide-react';
+import { Activity, ArrowRight, CheckCircle2, AlertCircle, ChevronDown } from 'lucide-react';
 import type { Sport } from '../../types/activity';
 import { useCreateActivity } from '../../hooks/useActivities';
 import { calculateSportPoints, SPORT_LABELS, SPORT_METRIC_MAP } from '../../utils/scoring';
@@ -22,10 +22,6 @@ export const LogActivityForm: React.FC<LogActivityFormProps> = ({ onSuccess }) =
   const [distanceKm, setDistanceKm] = useState<string>('5.5');
   const [durationMinutes, setDurationMinutes] = useState<string>('0');
   const [steps, setSteps] = useState<string>('5000');
-  const [date, setDate] = useState<string>(() => {
-    const today = new Date();
-    return today.toISOString().split('T')[0];
-  });
   const [statusMessage, setStatusMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   const createActivityMutation = useCreateActivity();
@@ -98,14 +94,6 @@ export const LogActivityForm: React.FC<LogActivityFormProps> = ({ onSuccess }) =
         payload.steps = parsedSteps;
       }
 
-      if (date) {
-        // Construct ISO date string with current time
-        const selectedDate = new Date(date);
-        const now = new Date();
-        selectedDate.setHours(now.getHours(), now.getMinutes(), now.getSeconds());
-        payload.recordedAt = selectedDate.toISOString();
-      }
-
       await createActivityMutation.mutateAsync(payload);
 
       setStatusMessage({
@@ -134,8 +122,8 @@ export const LogActivityForm: React.FC<LogActivityFormProps> = ({ onSuccess }) =
         <h2 className="text-lg sm:text-xl font-bold text-white font-display tracking-tight">
           Log Activity
         </h2>
-        <div className="text-[#9fa38c] p-1.5 rounded-lg bg-[#201f1f] border border-[#2e2e2e]">
-          <Calendar size={18} />
+        <div className="text-[#c3f400] p-1.5 rounded-lg bg-[#201f1f] border border-[#2e2e2e]">
+          <Activity size={18} />
         </div>
       </div>
 
@@ -286,24 +274,6 @@ export const LogActivityForm: React.FC<LogActivityFormProps> = ({ onSuccess }) =
           </div>
         )}
 
-        {/* Date Field */}
-        <div className="space-y-1.5">
-          <label
-            htmlFor="activity-date"
-            className="block text-xs font-semibold text-[#8e9379] uppercase tracking-wider"
-          >
-            Date
-          </label>
-          <div className="relative flex items-center">
-            <input
-              id="activity-date"
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              className="w-full bg-[#201f1f] border border-[#2a2a2a] focus:border-[#c3f400] text-white text-sm font-medium rounded-xl px-4 py-3 outline-none transition-colors [color-scheme:dark]"
-            />
-          </div>
-        </div>
 
         {/* Preview Box */}
         <div className="p-4 rounded-xl bg-[#201f1f] border border-[#2e2e2e] flex items-center justify-between">

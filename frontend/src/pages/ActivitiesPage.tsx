@@ -1,9 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { ActivityCard } from '../components/activities/ActivityCard';
 import { LogActivityForm } from '../components/activities/LogActivityForm';
+import { ConfirmDeleteModal } from '../components/common/ConfirmDeleteModal';
 import { useActivities, useDeleteActivity } from '../hooks/useActivities';
-import type { Sport } from '../types/activity';
-import { Activity, AlertCircle, RefreshCw } from 'lucide-react';
+import type { Activity, Sport } from '../types/activity';
+import { Activity as ActivityIcon, AlertCircle, RefreshCw } from 'lucide-react';
 
 type FilterType = 'ALL' | Sport;
 
@@ -19,6 +20,7 @@ const FILTER_OPTIONS: { key: FilterType; label: string }[] = [
 
 export const ActivitiesPage: React.FC = () => {
   const [selectedFilter, setSelectedFilter] = useState<FilterType>('ALL');
+  const [activityToDelete, setActivityToDelete] = useState<Activity | null>(null);
 
   const { data: activities, isLoading, isError, error, refetch } = useActivities();
   const deleteActivityMutation = useDeleteActivity();
@@ -30,13 +32,13 @@ export const ActivitiesPage: React.FC = () => {
     return activities.filter((act) => act.sport === selectedFilter);
   }, [activities, selectedFilter]);
 
-  const handleDelete = async (id: string) => {
-    if (window.confirm('Are you sure you want to delete this activity?')) {
-      try {
-        await deleteActivityMutation.mutateAsync(id);
-      } catch (err) {
-        console.error('Delete error:', err);
-      }
+  const handleConfirmDelete = async () => {
+    if (!activityToDelete) return;
+    try {
+      await deleteActivityMutation.mutateAsync(activityToDelete.id);
+      setActivityToDelete(null);
+    } catch (err) {
+      console.error('Delete error:', err);
     }
   };
 
@@ -121,7 +123,7 @@ export const ActivitiesPage: React.FC = () => {
               // Empty State
               <div className="p-10 rounded-2xl bg-[#1c1b1b] border border-dashed border-[#2a2a2a] text-center space-y-4">
                 <div className="w-14 h-14 rounded-full bg-[#201f1f] border border-[#2e2e2e] flex items-center justify-center mx-auto text-[#8e9379]">
-                  <Activity size={26} />
+                  <ActivityIcon size={26} />
                 </div>
                 <div className="space-y-1">
                   <h3 className="text-base font-bold text-white font-display">
@@ -140,8 +142,8 @@ export const ActivitiesPage: React.FC = () => {
                 <ActivityCard
                   key={act.id}
                   activity={act}
-                  onDelete={handleDelete}
-                  isDeleting={deleteActivityMutation.isPending}
+                  onDelete={(activity) => setActivityToDelete(activity)}
+                  isDeleting={deleteActivityMutation.isPending && activityToDelete?.id === act.id}
                 />
               ))
             )}
@@ -153,6 +155,15 @@ export const ActivitiesPage: React.FC = () => {
           <LogActivityForm />
         </div>
       </div>
+
+      {/* Confirmation Modal for Deletion */}
+      <ConfirmDeleteModal
+        isOpen={Boolean(activityToDelete)}
+        activity={activityToDelete}
+        isLoading={deleteActivityMutation.isPending}
+        onConfirm={handleConfirmDelete}
+        onClose={() => setActivityToDelete(null)}
+      />
     </div>
   );
 };
