@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Zap, Globe, Share2 } from 'lucide-react';
+import { Globe, Share2 } from 'lucide-react';
 import { scrollToSection } from '../../utils/scroll';
+import { Logo } from '../common/Logo';
 
 /* ─── Link Column Data ─── */
 interface LinkColumn {
@@ -45,13 +46,8 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-surface-low">
           {/* ── Brand Column (spans 2) ── */}
           <div className="lg:col-span-2 space-y-4">
-            <Link to="/" className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-surface-container border border-outline-medium flex items-center justify-center glow-badge">
-                <Zap className="text-primary-lime fill-primary-lime" size={18} />
-              </div>
-              <span className="text-xl font-black font-display tracking-tight text-white">
-                Fit<span className="text-primary-lime">Quest</span>
-              </span>
+            <Link to="/" className="inline-block">
+              <Logo size="sm" />
             </Link>
             <p className="text-xs sm:text-sm text-on-surface-label max-w-sm leading-relaxed">
               Elite-level tracking for those who demand more from every drop of

@@ -10,6 +10,7 @@ import {
   Plus,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { Logo } from '../common/Logo';
 
 interface SidebarProps {
   onOpenLogModal?: () => void;
@@ -59,14 +60,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {/* Top Header & Brand */}
         <div className="flex flex-col space-y-8">
           {/* Logo / Brand */}
-          <div className="flex flex-col">
-            <h1 className="text-2xl font-black text-white tracking-tight font-display">
-              FitQuest
-            </h1>
-            <p className="text-xs font-semibold text-[#8e9379] tracking-wider uppercase mt-0.5">
-              Elite Level 42
-            </p>
-          </div>
+          <Logo size="md" />
 
           {/* Navigation Links */}
           <nav className="flex flex-col space-y-1.5" aria-label="Main Navigation">

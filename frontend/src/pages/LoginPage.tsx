@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, Dumbbell, AlertCircle } from 'lucide-react';
+import { Mail, Lock, AlertCircle } from 'lucide-react';
 import { Input } from '../components/common/Input';
 import { Button } from '../components/common/Button';
+import { Logo } from '../components/common/Logo';
 import { useAuth } from '../context/AuthContext';
 import { AuthError } from '../api/auth';
 import loginHero from '../assets/login-hero.jpg';
@@ -75,18 +76,10 @@ export const LoginPage: React.FC = () => {
 
         {/* Centered Brand Identity Hero Block */}
         <div className="relative z-10 flex flex-col items-center max-w-sm space-y-4">
-          {/* Dumbbell Badge */}
-          <div className="w-16 h-16 rounded-2xl bg-[#201f1f]/90 border border-[#333333] flex items-center justify-center shadow-[0_8px_24px_rgba(0,0,0,0.6)] backdrop-blur-md transition-transform hover:scale-105">
-            <Dumbbell className="text-[#c3f400] rotate-[-45deg]" size={30} strokeWidth={2.4} />
-          </div>
-
-          {/* FitQuest Title */}
-          <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight font-display drop-shadow-lg">
-            FitQuest
-          </h1>
+          <Logo size="lg" className="flex-col !gap-4" />
 
           {/* Slogan */}
-          <p className="text-sm md:text-base text-[#a9ada0] leading-relaxed font-normal">
+          <p className="text-sm md:text-base text-[#a9ada0] leading-relaxed font-normal text-center">
             Push past your limits. Track your evolution. Dominate the leaderboard.
           </p>
         </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Bell, Settings, Menu } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { Logo } from '../common/Logo';
 
 interface TopHeaderProps {
   onToggleMobileMenu?: () => void;
@@ -27,7 +28,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({ onToggleMobileMenu }) => {
         >
           <Menu size={20} />
         </button>
-        <span className="text-lg font-bold text-white font-display">FitQuest</span>
+        <Logo size="sm" />
       </div>
 
       {/* Spacer for desktop layout since sidebar is fixed */}
