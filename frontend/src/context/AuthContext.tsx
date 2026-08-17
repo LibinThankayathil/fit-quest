@@ -13,7 +13,7 @@ interface AuthContextType {
   isLoading: boolean;
   login: (payload: LoginPayload) => Promise<void>;
   register: (payload: RegisterData) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -57,9 +57,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setUser(registeredUser);
   };
 
-  const logout = () => {
+  const logout = async () => {
+    await authApi.logout();
     setUser(null);
-    // In cookie-based auth, removing the client state directs back to login.
   };
 
   return (
@@ -69,6 +69,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (!context) {

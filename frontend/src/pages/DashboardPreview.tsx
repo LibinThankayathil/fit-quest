@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Dumbbell, LogOut, Flame, Trophy, Activity, Zap } from 'lucide-react';
+import { Dumbbell, LogOut, Flame, Trophy, Activity, Zap, AlertCircle } from 'lucide-react';
 import { Button } from '../components/common/Button';
 
 export const DashboardPreview: React.FC = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [error, setError] = useState<string | null>(null);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
+  const handleLogout = async () => {
+    try {
+      setIsLoggingOut(true);
+      setError(null);
+      await logout();
+      navigate('/login');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Logout failed. Please try again.');
+    } finally {
+      setIsLoggingOut(false);
+    }
   };
 
   return (
@@ -40,6 +50,7 @@ export const DashboardPreview: React.FC = () => {
               variant="secondary"
               fullWidth={false}
               onClick={handleLogout}
+              isLoading={isLoggingOut}
               className="py-2 px-3.5 text-xs sm:text-sm flex items-center gap-2"
             >
               <LogOut size={16} />
@@ -52,6 +63,12 @@ export const DashboardPreview: React.FC = () => {
       {/* Main Content */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <div className="space-y-8">
+          {error && (
+            <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center gap-3 text-red-400 text-sm">
+              <AlertCircle size={18} className="shrink-0" />
+              <span>{error}</span>
+            </div>
+          )}
           {/* Welcome Banner */}
           <div className="relative rounded-2xl bg-gradient-to-r from-[#1c1b1b] via-[#201f1f] to-[#1a2205] border border-[#2a2a2a] p-6 sm:p-8 overflow-hidden shadow-2xl">
             <div className="relative z-10 max-w-2xl">

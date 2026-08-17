@@ -87,4 +87,20 @@ export const authApi = {
       return null;
     }
   },
+
+  async logout(): Promise<void> {
+    const res = await fetch(`${API_BASE}/logout`, {
+      method: 'POST',
+      credentials: 'include',
+    });
+
+    const data: AuthResponse = await res.json().catch(() => ({
+      success: false,
+      message: 'Network error or invalid server response',
+    }));
+
+    if (!res.ok || !data.success) {
+      throw new AuthError(data.message || 'Logout failed');
+    }
+  },
 };
