@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowRight, Zap, Menu, X } from 'lucide-react';
+import { ArrowRight, Menu, X } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { scrollToSection } from '../../utils/scroll';
+import { Logo } from '../common/Logo';
 
 const NAV_LINKS = [
   { label: 'Features', id: 'features' },
@@ -27,13 +28,8 @@ export const Navbar: React.FC = () => {
     <header className="sticky top-0 z-50 bg-surface/90 backdrop-blur-md border-b border-surface-container">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* ── Brand ── */}
-        <Link to="/" className="flex items-center gap-2.5 group">
-          <div className="w-8 h-8 rounded-lg bg-surface-container border border-outline-medium flex items-center justify-center shadow-glow-sm group-hover:scale-105 transition-transform">
-            <Zap className="text-primary-lime fill-primary-lime" size={18} />
-          </div>
-          <span className="text-xl sm:text-2xl font-black font-display tracking-tight text-white group-hover:text-primary-lime transition-colors">
-            Fit<span className="text-primary-lime">Quest</span>
-          </span>
+        <Link to="/" className="flex items-center group">
+          <Logo size="sm" />
         </Link>
 
         {/* ── Desktop Nav ── */}
