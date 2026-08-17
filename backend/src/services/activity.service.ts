@@ -25,7 +25,7 @@ function extractMetric(input: CreateActivityInput): { value: number; unit: Metri
     case "distance":
       return { value: input.distanceKm!, unit: MetricUnit.KM };
     case "duration":
-      return { value: input.durationSeconds!, unit: MetricUnit.MINUTES };
+      return { value: input.durationSeconds! / 60, unit: MetricUnit.MINUTES };
     case "steps":
       return { value: input.steps!, unit: MetricUnit.STEPS };
   }
@@ -33,7 +33,7 @@ function extractMetric(input: CreateActivityInput): { value: number; unit: Metri
 
 export async function createActivity(userId: string, input: CreateActivityInput) {
   const { value, unit } = extractMetric(input);
-  const points = calculatePoints(input.sport, value);
+  const points = calculatePoints(input.sport, input.durationSeconds ?? value);
 
   const activity = await prisma.activity.create({
     data: {
