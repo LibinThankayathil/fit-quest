@@ -11,7 +11,8 @@ export const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
   const { register } = useAuth();
 
-  const [fullName, setFullName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
@@ -21,8 +22,11 @@ export const RegisterPage: React.FC = () => {
 
   const validateForm = () => {
     const errors: Record<string, string> = {};
-    if (!fullName.trim()) {
-      errors.fullName = 'Full name is required';
+    if (!firstName.trim()) {
+      errors.firstName = 'First name is required';
+    }
+    if (!lastName.trim()) {
+      errors.lastName = 'Last name is required';
     }
     if (!email.trim()) {
       errors.email = 'Email address is required';
@@ -49,7 +53,7 @@ export const RegisterPage: React.FC = () => {
     setIsLoading(true);
 
     try {
-      await register({ fullName, email, password });
+      await register({ firstName, lastName, email, password });
       navigate('/dashboard');
     } catch (err) {
       if (err instanceof AuthError) {
@@ -114,22 +118,41 @@ export const RegisterPage: React.FC = () => {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5" noValidate>
-            <Input
-              id="fullName"
-              label="Full Name"
-              placeholder="Jane Doe"
-              icon={<UserIcon size={18} />}
-              value={fullName}
-              onChange={(e) => {
-                setFullName(e.target.value);
-                if (fieldErrors.fullName) {
-                  setFieldErrors((prev) => ({ ...prev, fullName: '' }));
-                }
-              }}
-              error={fieldErrors.fullName}
-              autoComplete="name"
-              required
-            />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Input
+                id="firstName"
+                label="First Name"
+                placeholder="Jane"
+                icon={<UserIcon size={18} />}
+                value={firstName}
+                onChange={(e) => {
+                  setFirstName(e.target.value);
+                  if (fieldErrors.firstName) {
+                    setFieldErrors((prev) => ({ ...prev, firstName: '' }));
+                  }
+                }}
+                error={fieldErrors.firstName}
+                autoComplete="given-name"
+                required
+              />
+
+              <Input
+                id="lastName"
+                label="Last Name"
+                placeholder="Doe"
+                icon={<UserIcon size={18} />}
+                value={lastName}
+                onChange={(e) => {
+                  setLastName(e.target.value);
+                  if (fieldErrors.lastName) {
+                    setFieldErrors((prev) => ({ ...prev, lastName: '' }));
+                  }
+                }}
+                error={fieldErrors.lastName}
+                autoComplete="family-name"
+                required
+              />
+            </div>
 
             <Input
               id="email"

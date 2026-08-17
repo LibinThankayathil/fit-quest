@@ -3,7 +3,8 @@ import { authApi } from '../api/auth';
 import type { LoginPayload, User } from '../types/auth';
 
 interface RegisterData {
-  fullName: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
 }
@@ -42,18 +43,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setUser(loggedInUser);
   };
 
-  const register = async ({ fullName, email, password }: RegisterData) => {
-    // Split full name into firstName & lastName as expected by backend validator
-    const parts = fullName.trim().split(/\s+/);
-    const firstName = parts[0] || 'Athlete';
-    const lastName = parts.slice(1).join(' ') || parts[0] || 'Member';
-
-    const registeredUser = await authApi.register({
-      firstName,
-      lastName,
-      email,
-      password,
-    });
+  const register = async (data: RegisterData) => {
+    const registeredUser = await authApi.register(data);
     setUser(registeredUser);
   };
 
