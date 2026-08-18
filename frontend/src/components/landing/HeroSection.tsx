@@ -55,28 +55,6 @@ export const HeroSection: React.FC = () => {
                 <Trophy size={16} className="text-on-surface-variant" />
               </button>
             </div>
-
-            {/* Social Proof */}
-            <div className="flex items-center gap-3.5 pt-4">
-              <div className="flex -space-x-2.5 overflow-hidden">
-                {[
-                  { color: 'text-primary-lime', bg: 'bg-surface-high' },
-                  { color: 'text-emerald-400', bg: 'bg-outline-medium' },
-                  { color: 'text-teal-300', bg: 'bg-surface-bright' },
-                ].map((avatar, i) => (
-                  <div
-                    key={i}
-                    className={`inline-flex h-8 w-8 rounded-full ring-2 ring-surface items-center justify-center text-xs font-bold ${avatar.bg} ${avatar.color}`}
-                  >
-                    <User size={14} />
-                  </div>
-                ))}
-              </div>
-              <div className="text-xs sm:text-sm font-semibold tracking-wide text-on-surface-muted uppercase">
-                <span className="text-primary-lime font-black mr-1">142,384</span>{' '}
-                ATHLETES ACTIVE TODAY
-              </div>
-            </div>
           </div>
 
           {/* ── Right Hero Visual ── */}
