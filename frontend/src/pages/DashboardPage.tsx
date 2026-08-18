@@ -16,7 +16,7 @@ import { RecentActivitiesList } from '../components/dashboard/RecentActivitiesLi
 import { QuestCard } from '../components/dashboard/QuestCard';
 import { Star, Zap, Award, Flame } from 'lucide-react';
 
-export const DashboardPreview: React.FC = () => {
+export const DashboardPage: React.FC = () => {
   const { user } = useAuth();
   const { data: activities = [], isLoading } = useActivities();
 
@@ -141,5 +141,4 @@ export const DashboardPreview: React.FC = () => {
   );
 };
 
-export const DashboardPage = DashboardPreview;
-export default DashboardPreview;
+export default DashboardPage;
