@@ -6,6 +6,7 @@ import swaggerUi from "swagger-ui-express";
 import { openapiSpec } from "./docs/swagger";
 import authRoutes from "./routes/auth.routes";
 import activityRoutes from "./routes/activity.routes";
+import leaderboardRoutes from "./routes/leaderboard.routes";
 import { errorHandler } from "./middleware/error.middleware";
 
 const app = express();
@@ -30,6 +31,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openapiSpec));
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/activities", activityRoutes);
+app.use("/api/leaderboard", leaderboardRoutes);
 
 app.get("/api/health", (_req, res) => {
   res.json({
