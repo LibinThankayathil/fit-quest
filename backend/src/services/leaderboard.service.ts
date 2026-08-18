@@ -16,7 +16,6 @@ export interface LeaderboardEntryDto {
   displayName: string;
   points: number;
   activitiesCount: number;
-  change: number;
   recentActivity: RecentActivityDto | null;
   isCurrentUser: boolean;
 }
@@ -99,15 +98,6 @@ export async function getGlobalLeaderboard(
     const totalPoints = user.activities.reduce((sum, act) => sum + act.points, 0);
     const latestActivity = user.activities[0];
 
-    // Compute a stable deterministic change indicator (-3 to +3)
-    let change = 0;
-    const nameHash = (user.firstName + user.lastName).split("").reduce((acc, c) => acc + c.charCodeAt(0), 0);
-    if (nameHash % 5 === 0) change = 3;
-    else if (nameHash % 5 === 1) change = 1;
-    else if (nameHash % 5 === 2) change = -1;
-    else if (nameHash % 5 === 3) change = -2;
-    else change = 0;
-
     const displayName =
       user.lastName && user.lastName.length > 0
         ? `${user.firstName} ${user.lastName[0]}.`
@@ -120,7 +110,6 @@ export async function getGlobalLeaderboard(
       displayName,
       points: totalPoints,
       activitiesCount: user.activities.length,
-      change,
       recentActivity: latestActivity
         ? {
             sport: latestActivity.sport,

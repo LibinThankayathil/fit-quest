@@ -14,7 +14,6 @@ export interface LeaderboardEntry {
   displayName: string;
   points: number;
   activitiesCount: number;
-  change: number; // positive = moved up, negative = moved down, 0 = no change
   recentActivity: RecentActivity | null;
   isCurrentUser: boolean;
   avatarUrl?: string;

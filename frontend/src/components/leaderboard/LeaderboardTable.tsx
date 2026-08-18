@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import {
   TrendingUp,
-  TrendingDown,
-  Minus,
   Bike,
   Dumbbell,
   Waves,
@@ -61,7 +59,6 @@ export const LeaderboardTable: React.FC<LeaderboardTableProps> = ({
               <th className="py-3.5 px-4 sm:px-6 w-16 text-center">Rank</th>
               <th className="py-3.5 px-4 sm:px-6">User</th>
               <th className="py-3.5 px-4 sm:px-6 text-right">Points</th>
-              <th className="py-3.5 px-4 sm:px-6 text-center">Change</th>
               <th className="py-3.5 px-4 sm:px-6 text-right">Recent Activity</th>
             </tr>
           </thead>
@@ -131,26 +128,6 @@ export const LeaderboardTable: React.FC<LeaderboardTableProps> = ({
                     >
                       {athlete.points.toLocaleString()}
                     </span>
-                  </td>
-
-                  {/* Change Indicator */}
-                  <td className="py-4 px-4 sm:px-6 text-center">
-                    {athlete.change > 0 ? (
-                      <div className="inline-flex items-center gap-0.5 text-xs font-bold text-[#4ae183]">
-                        <TrendingUp size={13} />
-                        <span>{athlete.change}</span>
-                      </div>
-                    ) : athlete.change < 0 ? (
-                      <div className="inline-flex items-center gap-0.5 text-xs font-bold text-red-400">
-                        <TrendingDown size={13} />
-                        <span>{Math.abs(athlete.change)}</span>
-                      </div>
-                    ) : (
-                      <div className="inline-flex items-center text-xs font-bold text-[#8e9379]">
-                        <Minus size={13} />
-                        <Minus size={13} className="-ml-1" />
-                      </div>
-                    )}
                   </td>
 
                   {/* Recent Activity Badge */}
