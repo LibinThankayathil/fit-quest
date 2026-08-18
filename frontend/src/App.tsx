@@ -7,6 +7,7 @@ import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { ActivitiesPage } from './pages/ActivitiesPage';
+import { LeaderboardPage } from './pages/LeaderboardPage';
 import { PlaceholderPage } from './pages/PlaceholderPage';
 import { HomePage } from './pages/HomePage';
 import { AppLayout } from './components/layout/AppLayout';
@@ -97,10 +98,7 @@ export function App() {
               element={
                 <ProtectedRoute>
                   <AppLayout>
-                    <PlaceholderPage
-                      title="Leaderboard"
-                      description="Compete against other athletes and climb the global rankings."
-                    />
+                    <LeaderboardPage />
                   </AppLayout>
                 </ProtectedRoute>
               }
