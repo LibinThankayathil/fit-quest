@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { User as UserIcon, Mail, Lock, ArrowRight, AlertCircle } from 'lucide-react';
+import { User as UserIcon, Mail, Lock, ArrowRight, ArrowLeft, AlertCircle } from 'lucide-react';
 import { Input } from '../components/common/Input';
 import { Button } from '../components/common/Button';
 import { useAuth } from '../context/AuthContext';
@@ -70,7 +70,17 @@ export const RegisterPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col md:flex-row bg-[#131313] text-[#e5e2e1]">
+    <div className="relative min-h-screen w-full flex flex-col md:flex-row bg-[#131313] text-[#e5e2e1]">
+      {/* Back to Home Button */}
+      <Link
+        to="/"
+        className="absolute top-5 left-5 z-20 inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#1c1b1b]/80 hover:bg-[#2a2a2a] text-[#9fa38c] hover:text-white border border-[#333333]/80 hover:border-[#444] backdrop-blur-md text-xs font-semibold tracking-wide transition-all shadow-md group cursor-pointer"
+        aria-label="Back to Home"
+      >
+        <ArrowLeft size={16} className="group-hover:-translate-x-0.5 transition-transform text-[#c3f400]" />
+        <span>Back to Home</span>
+      </Link>
+
       {/* Left Visual Hero Section */}
       <div className="relative w-full md:w-1/2 min-h-[340px] md:min-h-screen bg-[#0e0e0e] overflow-hidden flex flex-col justify-end p-8 md:p-14">
         <img
