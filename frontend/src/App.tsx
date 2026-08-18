@@ -8,6 +8,7 @@ import { RegisterPage } from './pages/RegisterPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { ActivitiesPage } from './pages/ActivitiesPage';
 import { LeaderboardPage } from './pages/LeaderboardPage';
+import { ProfilePage } from './pages/ProfilePage';
 import { PlaceholderPage } from './pages/PlaceholderPage';
 import { HomePage } from './pages/HomePage';
 import { AppLayout } from './components/layout/AppLayout';
@@ -108,10 +109,7 @@ export function App() {
               element={
                 <ProtectedRoute>
                   <AppLayout>
-                    <PlaceholderPage
-                      title="Profile"
-                      description="Manage your athlete account, biometric data, and achievements."
-                    />
+                    <ProfilePage />
                   </AppLayout>
                 </ProtectedRoute>
               }
