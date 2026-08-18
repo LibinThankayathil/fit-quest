@@ -28,3 +28,20 @@ export const authenticate = (
     });
   }
 };
+
+export const optionalAuth = (
+  req: Request,
+  _res: Response,
+  next: NextFunction,
+) => {
+  const token = req.cookies[ACCESS_TOKEN_COOKIE];
+  if (token) {
+    try {
+      const payload = verifyAccessToken(token);
+      req.user = { id: payload.sub };
+    } catch {
+      // Ignore invalid token for optional auth
+    }
+  }
+  next();
+};
