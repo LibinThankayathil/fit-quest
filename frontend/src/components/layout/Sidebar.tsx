@@ -5,7 +5,6 @@ import {
   Dumbbell,
   Trophy,
   User,
-  Settings,
   LogOut,
   Plus,
 } from 'lucide-react';
@@ -119,23 +118,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <span>Log Activity</span>
           </button>
 
-          {/* Settings & Logout */}
+          {/* Logout */}
           <div className="flex flex-col space-y-1 pt-2">
-            <NavLink
-              to="/settings"
-              onClick={onCloseMobile}
-              className={({ isActive }) =>
-                `flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
-                  isActive
-                    ? 'bg-[#201f1f] text-white'
-                    : 'text-[#9fa38c] hover:text-white hover:bg-[#1a1a1a]'
-                }`
-              }
-            >
-              <Settings size={18} />
-              <span>Settings</span>
-            </NavLink>
-
             <button
               type="button"
               onClick={handleLogout}

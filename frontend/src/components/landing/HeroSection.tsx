@@ -15,11 +15,6 @@ export const HeroSection: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           {/* ── Left Copy ── */}
           <div className="lg:col-span-6 space-y-6 sm:space-y-8 z-10">
-            {/* Season Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface-low border border-surface-high text-[11px] font-bold tracking-widest text-on-surface-variant uppercase shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-primary-lime animate-pulse" />
-              <span>SEASON 4 NOW LIVE</span>
-            </div>
 
             {/* Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black font-display tracking-tight text-white leading-[1.1]">
