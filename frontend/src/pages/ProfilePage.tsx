@@ -48,7 +48,7 @@ const getSportIcon = (sport?: Sport, size = 20) => {
 export const ProfilePage: React.FC = () => {
   const { user } = useAuth();
   const { data: activities = [], isLoading: activitiesLoading } = useActivities();
-  const { data: leaderboardData, isLoading: leaderboardLoading } = useLeaderboard('this_month');
+  const { data: leaderboardData, isLoading: leaderboardLoading } = useLeaderboard('all_time');
 
   // Compute dynamic stats
   const totalPoints = useMemo(() => calculateTotalPoints(activities), [activities]);
