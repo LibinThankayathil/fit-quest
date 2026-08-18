@@ -1,9 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Trophy, Flame, User } from 'lucide-react';
+import { ArrowRight, Trophy, User } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { scrollToSection } from '../../utils/scroll';
-import heroAthleteImg from '../../assets/hero-athlete.jpg';
+import screenImg from '../../assets/screen.png';
 
 export const HeroSection: React.FC = () => {
   const navigate = useNavigate();
@@ -35,6 +35,7 @@ export const HeroSection: React.FC = () => {
             {/* CTAs */}
             <div className="flex flex-wrap items-center gap-4 pt-2">
               <button
+                type="button"
                 onClick={() => navigate(user ? '/dashboard' : '/register')}
                 className="px-7 py-3.5 rounded-full bg-primary-lime hover:bg-primary-lime-dim text-on-primary font-black text-sm tracking-tight inline-flex items-center gap-2 shadow-glow-lg transition-all cursor-pointer group"
               >
@@ -46,6 +47,7 @@ export const HeroSection: React.FC = () => {
               </button>
 
               <button
+                type="button"
                 onClick={() => scrollToSection('global-arena')}
                 className="px-7 py-3.5 rounded-full bg-surface-low hover:bg-outline-divider text-white border border-outline-card hover:border-outline-hover font-bold text-sm tracking-tight inline-flex items-center gap-2.5 transition-all cursor-pointer"
               >
@@ -79,51 +81,17 @@ export const HeroSection: React.FC = () => {
 
           {/* ── Right Hero Visual ── */}
           <div className="lg:col-span-6 relative flex justify-center lg:justify-end">
-            <div className="relative w-full max-w-[480px] rounded-3xl p-2 bg-gradient-to-b from-surface-high/60 via-surface-low/80 to-surface border border-outline-medium/80 shadow-elevation-deep backdrop-blur-sm overflow-hidden group">
-              {/* Tech UI Header */}
-              <div className="px-4 py-2.5 border-b border-surface-high flex items-center justify-between text-[11px] font-mono text-on-surface-label bg-surface-inset/90">
-                <div className="flex gap-4">
-                  <span className="text-primary-lime font-bold cursor-pointer">
-                    Telemetry
-                  </span>
-                  <span className="hover:text-white cursor-pointer">Biometrics</span>
-                  <span className="hover:text-white cursor-pointer">Sensors</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary-lime animate-ping" />
-                  <span className="text-[10px] text-primary-lime">SYNCED</span>
-                </div>
-              </div>
+            <div className="relative w-full max-w-[540px] rounded-3xl p-2.5 sm:p-3.5 bg-gradient-to-b from-surface-high/60 via-surface-low/80 to-surface border border-outline-medium/80 shadow-elevation-deep backdrop-blur-md overflow-hidden group">
+              {/* Ambient Glow */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-primary-lime/15 via-emerald-500/10 to-transparent rounded-3xl blur-xl opacity-75 pointer-events-none" />
 
-              {/* Athlete Image */}
-              <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-surface-void">
+              {/* Screen Image Frame */}
+              <div className="relative w-full rounded-2xl overflow-hidden bg-surface-void border border-outline-divider/50 shadow-2xl">
                 <img
-                  src={heroAthleteImg}
-                  alt="FitQuest Futuristic Cybernetic Athlete"
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                  src={screenImg}
+                  alt="FitQuest App Preview"
+                  className="w-full h-auto object-cover object-center group-hover:scale-[1.02] transition-transform duration-500"
                 />
-
-                {/* Corner Brackets */}
-                <div className="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-primary-lime" />
-                <div className="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-primary-lime" />
-                <div className="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-primary-lime" />
-                <div className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-primary-lime" />
-
-                {/* Streak HUD Card */}
-                <div className="absolute bottom-4 left-4 right-4 sm:right-auto sm:left-4 sm:bottom-4 bg-surface-card/90 border border-outline-medium backdrop-blur-md rounded-2xl p-3.5 sm:px-5 sm:py-3.5 flex items-center gap-4 shadow-[0_8px_32px_rgba(0,0,0,0.6)]">
-                  <div className="w-11 h-11 rounded-xl bg-surface-container border border-primary-lime/40 flex items-center justify-center text-primary-lime shadow-glow-sm shrink-0">
-                    <Flame size={22} className="fill-primary-lime/20" />
-                  </div>
-                  <div>
-                    <div className="text-[10px] uppercase font-bold tracking-widest text-on-surface-label">
-                      CURRENT STREAK
-                    </div>
-                    <div className="text-2xl font-black font-display text-white tracking-tight leading-none mt-0.5">
-                      42{' '}
-                      <span className="text-primary-lime text-lg font-bold">Days</span>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
