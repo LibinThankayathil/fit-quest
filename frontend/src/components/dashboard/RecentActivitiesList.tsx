@@ -64,14 +64,7 @@ const formatMetricDisplay = (activity: Activity) => {
 export const RecentActivitiesList: React.FC<RecentActivitiesListProps> = ({ activities }) => {
   const navigate = useNavigate();
 
-  // If no user activities, provide sample entries matching mockup for preview
-  const displayActivities = activities.length > 0
-    ? activities.slice(0, 3)
-    : [
-        { id: '1', sport: 'RUNNING' as Sport, unit: 'KM' as const, value: 5.4, points: 540, recordedAt: new Date().toISOString(), createdAt: new Date().toISOString() },
-        { id: '2', sport: 'CYCLING' as Sport, unit: 'KM' as const, value: 12.0, points: 300, recordedAt: new Date().toISOString(), createdAt: new Date().toISOString() },
-        { id: '3', sport: 'GYM' as Sport, unit: 'MINUTES' as const, value: 45, points: 225, recordedAt: new Date().toISOString(), createdAt: new Date().toISOString() },
-      ];
+  const displayActivities = activities.slice(0, 3);
 
   return (
     <div className="p-6 rounded-2xl bg-[#1c1b1b] border border-[#2a2a2a] shadow-xs flex flex-col justify-between space-y-4">
@@ -91,48 +84,62 @@ export const RecentActivitiesList: React.FC<RecentActivitiesListProps> = ({ acti
 
       {/* List */}
       <div className="space-y-3">
-        {displayActivities.map((act) => {
-          const config = getSportIconConfig(act.sport);
-          const Icon = config.icon;
-          const label = SPORT_LABELS[act.sport] || act.sport;
-
-          return (
-            <div
-              key={act.id}
+        {displayActivities.length === 0 ? (
+          <div className="p-6 rounded-xl bg-[#201f1f] border border-dashed border-[#2a2a2a] text-center space-y-2">
+            <p className="text-sm font-semibold text-white font-display">No recent activities</p>
+            <p className="text-xs text-[#8e9379]">Log your first workout to start earning points!</p>
+            <button
+              type="button"
               onClick={() => navigate('/activities')}
-              className="group flex items-center justify-between p-3.5 sm:p-4 rounded-xl bg-[#201f1f] border border-[#2a2a2a] hover:border-[#3a3a3a] transition-all duration-200 cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#c3f400] text-[#161e00] font-bold text-xs hover:bg-[#abd600] transition-colors cursor-pointer mt-1"
             >
-              {/* Left: Icon & Info */}
-              <div className="flex items-center gap-3.5 min-w-0">
-                <div
-                  className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${config.bg}`}
-                >
-                  <Icon size={20} />
+              Log Activity
+            </button>
+          </div>
+        ) : (
+          displayActivities.map((act) => {
+            const config = getSportIconConfig(act.sport);
+            const Icon = config.icon;
+            const label = SPORT_LABELS[act.sport] || act.sport;
+
+            return (
+              <div
+                key={act.id}
+                onClick={() => navigate('/activities')}
+                className="group flex items-center justify-between p-3.5 sm:p-4 rounded-xl bg-[#201f1f] border border-[#2a2a2a] hover:border-[#3a3a3a] transition-all duration-200 cursor-pointer"
+              >
+                {/* Left: Icon & Info */}
+                <div className="flex items-center gap-3.5 min-w-0">
+                  <div
+                    className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${config.bg}`}
+                  >
+                    <Icon size={20} />
+                  </div>
+
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-sm font-bold text-white font-display truncate group-hover:text-[#c3f400] transition-colors">
+                      {label}
+                    </span>
+                    <span className="text-xs text-[#8e9379] truncate">
+                      {formatMetricDisplay(act)}
+                    </span>
+                  </div>
                 </div>
 
-                <div className="flex flex-col min-w-0">
-                  <span className="text-sm font-bold text-white font-display truncate group-hover:text-[#c3f400] transition-colors">
-                    {label}
+                {/* Right: Points & Chevron */}
+                <div className="flex items-center gap-2.5 shrink-0">
+                  <span className="text-xs sm:text-sm font-bold text-[#c3f400] font-display">
+                    +{act.points} pts
                   </span>
-                  <span className="text-xs text-[#8e9379] truncate">
-                    {formatMetricDisplay(act)}
-                  </span>
+                  <ChevronRight
+                    size={16}
+                    className="text-[#8e9379] group-hover:text-white group-hover:translate-x-0.5 transition-all"
+                  />
                 </div>
               </div>
-
-              {/* Right: Points & Chevron */}
-              <div className="flex items-center gap-2.5 shrink-0">
-                <span className="text-xs sm:text-sm font-bold text-[#c3f400] font-display">
-                  +{act.points} pts
-                </span>
-                <ChevronRight
-                  size={16}
-                  className="text-[#8e9379] group-hover:text-white group-hover:translate-x-0.5 transition-all"
-                />
-              </div>
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </div>
     </div>
   );

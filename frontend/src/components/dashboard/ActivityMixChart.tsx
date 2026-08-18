@@ -69,27 +69,33 @@ export const ActivityMixChart: React.FC<ActivityMixChartProps> = ({
         {/* Center Label */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
           <span className="text-2xl font-black text-white font-display tracking-tight">
-            {totalActivitiesCount > 0 ? `${items[0]?.percentage || 100}%` : '100%'}
+            {totalActivitiesCount > 0 ? `${items[0]?.percentage || 100}%` : '0%'}
           </span>
           <span className="text-[11px] font-semibold text-[#8e9379] uppercase tracking-wider">
-            {totalActivitiesCount > 0 ? items[0]?.label || 'Effort' : 'Effort'}
+            {totalActivitiesCount > 0 ? items[0]?.label || 'Effort' : 'Workouts'}
           </span>
         </div>
       </div>
 
       {/* Legend List (2 columns matching design) */}
       <div className="grid grid-cols-2 gap-y-2.5 gap-x-4 pt-2">
-        {items.slice(0, 4).map((item) => (
-          <div key={item.sport} className="flex items-center gap-2 text-xs font-medium text-[#c4c9ac]">
-            <span
-              className="w-2.5 h-2.5 rounded-full shrink-0"
-              style={{ backgroundColor: item.color }}
-            />
-            <span className="truncate">
-              {item.label} ({item.percentage}%)
-            </span>
+        {items.length === 0 ? (
+          <div className="col-span-2 text-center text-xs text-[#8e9379]">
+            No activity breakdown available
           </div>
-        ))}
+        ) : (
+          items.slice(0, 4).map((item) => (
+            <div key={item.sport} className="flex items-center gap-2 text-xs font-medium text-[#c4c9ac]">
+              <span
+                className="w-2.5 h-2.5 rounded-full shrink-0"
+                style={{ backgroundColor: item.color }}
+              />
+              <span className="truncate">
+                {item.label} ({item.percentage}%)
+              </span>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

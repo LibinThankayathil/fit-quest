@@ -61,7 +61,7 @@ export function calculateWeeklyStats(activities: Activity[] = []): {
     }
   }
 
-  let percentageChange = 12; // default positive trend indicator
+  let percentageChange = 0;
   if (pointsPrevWeek > 0) {
     percentageChange = Math.round(((pointsThisWeek - pointsPrevWeek) / pointsPrevWeek) * 100);
   } else if (pointsThisWeek > 0) {
@@ -143,13 +143,7 @@ export function calculate7DayPoints(activities: Activity[] = []): DayData[] {
  */
 export function calculateActivityMix(activities: Activity[] = []): ActivityMixItem[] {
   if (!activities.length) {
-    // Default preview mix if no activities recorded yet
-    return [
-      { sport: 'RUNNING', label: 'Running', count: 0, percentage: 45, color: SPORT_COLORS.RUNNING },
-      { sport: 'CYCLING', label: 'Cycling', count: 0, percentage: 25, color: SPORT_COLORS.CYCLING },
-      { sport: 'WALKING', label: 'Walking', count: 0, percentage: 20, color: SPORT_COLORS.WALKING },
-      { sport: 'GYM', label: 'Gym', count: 0, percentage: 10, color: SPORT_COLORS.GYM },
-    ];
+    return [];
   }
 
   const counts: Partial<Record<Sport, number>> = {};

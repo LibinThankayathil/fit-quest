@@ -31,10 +31,10 @@ export const DashboardPage: React.FC = () => {
     [weeklyStats.countThisWeek]
   );
 
-  const displayTotalPoints = totalPoints > 0 ? totalPoints : 12450;
-  const displayActivitiesCount = activities.length > 0 ? activities.length : 42;
-  const displayWeeklyCount = activities.length > 0 ? weeklyStats.countThisWeek : 8;
-  const displayStreak = streak > 0 ? streak : 7;
+  const displayTotalPoints = totalPoints;
+  const displayActivitiesCount = activities.length;
+  const displayWeeklyCount = weeklyStats.countThisWeek;
+  const displayStreak = streak;
 
   if (isLoading) {
     return (
@@ -76,8 +76,14 @@ export const DashboardPage: React.FC = () => {
           iconColor="text-[#c3f400]"
           label="TOTAL POINTS"
           value={displayTotalPoints.toLocaleString()}
-          subValue="↗ +12% this week"
-          isPositiveTrend={true}
+          subValue={
+            weeklyStats.percentageChange > 0
+              ? `↗ +${weeklyStats.percentageChange}% this week`
+              : weeklyStats.percentageChange < 0
+              ? `↘ ${weeklyStats.percentageChange}% this week`
+              : '0% this week'
+          }
+          isPositiveTrend={weeklyStats.percentageChange >= 0}
         />
 
         <StatCard
@@ -92,16 +98,16 @@ export const DashboardPage: React.FC = () => {
           icon={Award}
           iconColor="text-[#c3f400]"
           label="CURRENT RANK"
-          value="#8"
-          subValue="↑ 3 positions"
-          isPositiveTrend={true}
+          value={activities.length > 0 ? '#8' : '--'}
+          subValue={activities.length > 0 ? '↑ 3 positions' : 'Unranked'}
+          isPositiveTrend={activities.length > 0}
         />
 
         <StatCard
           icon={Flame}
           iconColor="text-[#fb923c]"
           label="CURRENT STREAK"
-          value={`${displayStreak} days`}
+          value={`${displayStreak} ${displayStreak === 1 ? 'day' : 'days'}`}
         />
       </div>
 
@@ -132,8 +138,8 @@ export const DashboardPage: React.FC = () => {
 
         {/* Quest Module */}
         <QuestCard
-          progressPercentage={quest.progressPercentage || 80}
-          remainingCount={quest.remainingCount || 3}
+          progressPercentage={quest.progressPercentage}
+          remainingCount={quest.remainingCount}
           bonusPoints={500}
         />
       </div>

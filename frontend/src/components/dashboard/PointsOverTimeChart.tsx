@@ -8,15 +8,7 @@ interface PointsOverTimeChartProps {
 export const PointsOverTimeChart: React.FC<PointsOverTimeChartProps> = ({ data }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  // If all points are 0 (e.g. new user), provide visual sample data for preview
-  const totalPointsInView = data.reduce((sum, d) => sum + d.points, 0);
-  const chartData = totalPointsInView > 0
-    ? data
-    : data.map((d, i) => ({
-        ...d,
-        points: [250, 300, 420, 380, 750, 1100, 850][i] || 300,
-      }));
-
+  const chartData = data;
   const maxPoints = Math.max(...chartData.map((d) => d.points), 100);
 
   // SVG Chart Dimensions
