@@ -14,7 +14,7 @@ import {
   calculateTrophyStatus,
 } from '../utils/profileAnalytics';
 import {
-  MapPin,
+  Trophy,
   TrendingUp,
   Bike,
   Dumbbell,
@@ -25,7 +25,6 @@ import {
   Award,
 } from 'lucide-react';
 import type { Sport } from '../types/activity';
-import athleteAvatar from '../assets/hero-athlete.jpg';
 
 const getSportIcon = (sport?: Sport, size = 20) => {
   switch (sport) {
@@ -80,6 +79,10 @@ export const ProfilePage: React.FC = () => {
     );
   }
 
+  const userInitials = user
+    ? `${user.firstName?.[0] || ''}${user.lastName?.[0] || ''}`.toUpperCase()
+    : 'FQ';
+
   return (
     <div className="space-y-8 animate-fadeIn pb-12">
       {/* 1. Top Profile Header Banner */}
@@ -88,16 +91,17 @@ export const ProfilePage: React.FC = () => {
         <div className="flex items-center gap-5">
           {/* Avatar Container with LVL Badge */}
           <div className="relative shrink-0">
-            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-[#333333] bg-[#201f1f] shadow-lg">
-              <img
-                src={athleteAvatar}
-                alt="Athlete Avatar"
-                className="w-full h-full object-cover"
-              />
+            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full border-2 border-[#444933] bg-[#201f1f] shadow-lg flex items-center justify-center relative overflow-hidden">
+              <span className="text-2xl sm:text-3xl font-black text-white font-display z-10 select-none">
+                {userInitials}
+              </span>
+              {/* Subtle accent glow */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#c3f400]/25 via-transparent to-transparent opacity-80" />
             </div>
+
             {/* Dynamic Level Badge at bottom center */}
-            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full bg-[#201f1f] border border-[#333333] shadow-md">
-              <span className="text-[11px] font-black text-[#c3f400] tracking-wider uppercase font-display">
+            <div className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-[#181818] border border-[#444933] shadow-md z-20 whitespace-nowrap flex items-center justify-center">
+              <span className="text-[11px] font-black text-[#c3f400] tracking-wider uppercase font-display leading-tight">
                 LVL {level}
               </span>
             </div>
@@ -109,8 +113,8 @@ export const ProfilePage: React.FC = () => {
               {user ? `${user.firstName} ${user.lastName || ''}`.trim() : 'Athlete'}
             </h1>
             <div className="flex items-center gap-1.5 text-xs sm:text-sm text-[#8e9379]">
-              <MapPin size={14} className="text-[#8e9379]" />
-              <span>{divisionTier}, Global</span>
+              <Trophy size={14} className="text-[#c3f400]" />
+              <span>{divisionTier}</span>
             </div>
           </div>
         </div>

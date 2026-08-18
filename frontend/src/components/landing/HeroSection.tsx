@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Trophy, User } from 'lucide-react';
+import { ArrowRight, Trophy } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { scrollToSection } from '../../utils/scroll';
 import screenImg from '../../assets/screen.png';

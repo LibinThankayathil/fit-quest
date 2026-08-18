@@ -152,17 +152,6 @@ export const LoginPage: React.FC = () => {
               required
             />
 
-            {/* Forgot Password Affordance */}
-            <div className="flex justify-end pt-1">
-              <button
-                type="button"
-                onClick={() => alert('Password reset flow will be available soon.')}
-                className="text-xs font-semibold text-[#c3f400] hover:text-[#abd600] hover:underline transition-colors focus:outline-none"
-              >
-                Forgot password?
-              </button>
-            </div>
-
             <div className="pt-2">
               <Button
                 type="submit"
