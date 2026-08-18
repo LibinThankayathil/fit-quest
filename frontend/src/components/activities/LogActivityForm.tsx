@@ -175,54 +175,27 @@ export const LogActivityForm: React.FC<LogActivityFormProps> = ({ onSuccess }) =
 
         {/* Dynamic Metric Inputs */}
         {metricCategory === 'distance' ? (
-          <div className="grid grid-cols-2 gap-3">
-            {/* Distance input */}
-            <div className="space-y-1.5">
-              <label
-                htmlFor="activity-distance"
-                className="block text-xs font-semibold text-[#8e9379] uppercase tracking-wider"
-              >
-                Distance
-              </label>
-              <div className="relative flex items-center">
-                <input
-                  id="activity-distance"
-                  type="number"
-                  step="0.1"
-                  min="0.1"
-                  value={distanceKm}
-                  onChange={(e) => setDistanceKm(e.target.value)}
-                  placeholder="5.5"
-                  className="w-full bg-[#201f1f] border border-[#2a2a2a] focus:border-[#c3f400] text-white text-sm font-medium rounded-xl px-4 py-3 pr-12 outline-none transition-colors"
-                />
-                <span className="absolute right-3.5 text-xs font-semibold text-[#8e9379] pointer-events-none">
-                  km
-                </span>
-              </div>
-            </div>
-
-            {/* Optional Duration input */}
-            <div className="space-y-1.5">
-              <label
-                htmlFor="activity-duration"
-                className="block text-xs font-semibold text-[#8e9379] uppercase tracking-wider"
-              >
-                Duration
-              </label>
-              <div className="relative flex items-center">
-                <input
-                  id="activity-duration"
-                  type="number"
-                  min="0"
-                  value={durationMinutes}
-                  onChange={(e) => setDurationMinutes(e.target.value)}
-                  placeholder="0"
-                  className="w-full bg-[#201f1f] border border-[#2a2a2a] focus:border-[#c3f400] text-white text-sm font-medium rounded-xl px-4 py-3 pr-12 outline-none transition-colors"
-                />
-                <span className="absolute right-3.5 text-xs font-semibold text-[#8e9379] pointer-events-none">
-                  min
-                </span>
-              </div>
+          <div className="space-y-1.5">
+            <label
+              htmlFor="activity-distance"
+              className="block text-xs font-semibold text-[#8e9379] uppercase tracking-wider"
+            >
+              Distance
+            </label>
+            <div className="relative flex items-center">
+              <input
+                id="activity-distance"
+                type="number"
+                step="0.1"
+                min="0.1"
+                value={distanceKm}
+                onChange={(e) => setDistanceKm(e.target.value)}
+                placeholder="5.5"
+                className="w-full bg-[#201f1f] border border-[#2a2a2a] focus:border-[#c3f400] text-white text-sm font-medium rounded-xl px-4 py-3 pr-12 outline-none transition-colors"
+              />
+              <span className="absolute right-3.5 text-xs font-semibold text-[#8e9379] pointer-events-none">
+                km
+              </span>
             </div>
           </div>
         ) : metricCategory === 'duration' ? (
