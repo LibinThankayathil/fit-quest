@@ -6,7 +6,7 @@ import { UnifiedSystem } from '../components/landing/UnifiedSystem';
 import { LeaderboardSection } from '../components/landing/LeaderboardSection';
 import { Footer } from '../components/landing/Footer';
 
-export const LandingPage: React.FC = () => {
+export const HomePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-surface text-on-surface flex flex-col">
       <Navbar />
@@ -18,3 +18,5 @@ export const LandingPage: React.FC = () => {
     </div>
   );
 };
+
+export default HomePage;
