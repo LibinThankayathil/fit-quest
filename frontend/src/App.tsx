@@ -97,11 +97,9 @@ export function App() {
             <Route
               path="/leaderboard"
               element={
-                <ProtectedRoute>
-                  <AppLayout>
-                    <LeaderboardPage />
-                  </AppLayout>
-                </ProtectedRoute>
+                <AppLayout>
+                  <LeaderboardPage />
+                </AppLayout>
               }
             />
             <Route

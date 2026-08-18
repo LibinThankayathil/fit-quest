@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Trophy } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-import { scrollToSection } from '../../utils/scroll';
 import screenImg from '../../assets/screen.png';
 
 export const HeroSection: React.FC = () => {
@@ -48,7 +47,7 @@ export const HeroSection: React.FC = () => {
 
               <button
                 type="button"
-                onClick={() => scrollToSection('global-arena')}
+                onClick={() => navigate('/leaderboard')}
                 className="px-7 py-3.5 rounded-full bg-surface-low hover:bg-outline-divider text-white border border-outline-card hover:border-outline-hover font-bold text-sm tracking-tight inline-flex items-center gap-2.5 transition-all cursor-pointer"
               >
                 <span>View Leaderboard</span>

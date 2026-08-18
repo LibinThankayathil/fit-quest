@@ -6,6 +6,7 @@ import {
   Trophy,
   User,
   LogOut,
+  LogIn,
   Plus,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
@@ -22,7 +23,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   isMobileOpen = false,
   onCloseMobile,
 }) => {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -104,8 +105,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <button
             type="button"
             onClick={() => {
-              navigate('/activities');
-              if (onOpenLogModal) {
+              navigate(user ? '/activities' : '/login');
+              if (user && onOpenLogModal) {
                 onOpenLogModal();
               }
               if (onCloseMobile) {
@@ -118,16 +119,27 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <span>Log Activity</span>
           </button>
 
-          {/* Logout */}
+          {/* Auth Action */}
           <div className="flex flex-col space-y-1 pt-2">
-            <button
-              type="button"
-              onClick={handleLogout}
-              className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-[#9fa38c] hover:text-red-400 hover:bg-[#1a1a1a] transition-colors cursor-pointer w-full text-left"
-            >
-              <LogOut size={18} />
-              <span>Logout</span>
-            </button>
+            {user ? (
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-[#9fa38c] hover:text-red-400 hover:bg-[#1a1a1a] transition-colors cursor-pointer w-full text-left"
+              >
+                <LogOut size={18} />
+                <span>Logout</span>
+              </button>
+            ) : (
+              <NavLink
+                to="/login"
+                onClick={onCloseMobile}
+                className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-[#9fa38c] hover:text-[#c3f400] hover:bg-[#1a1a1a] transition-colors cursor-pointer w-full text-left"
+              >
+                <LogIn size={18} />
+                <span>Log In</span>
+              </NavLink>
+            )}
           </div>
         </div>
       </aside>

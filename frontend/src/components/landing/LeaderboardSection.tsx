@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Footprints, Bike, Sparkles, Zap, User } from 'lucide-react';
+import { Footprints, Bike, Sparkles, Zap, User, Trophy } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 /* ─── Leaderboard Row Data ─── */
@@ -151,7 +151,15 @@ export const LeaderboardSection: React.FC = () => {
         </div>
 
         {/* CTA */}
-        <div className="mt-12 text-center">
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-4 text-center">
+          <button
+            onClick={() => navigate('/leaderboard')}
+            className="px-8 py-4 rounded-full bg-surface-low hover:bg-outline-divider text-white border border-outline-card hover:border-outline-hover font-bold text-base tracking-tight inline-flex items-center gap-2.5 transition-all cursor-pointer"
+          >
+            <span>View Full Leaderboard</span>
+            <Trophy size={18} className="text-primary-lime" />
+          </button>
+
           <button
             onClick={() => navigate(user ? '/dashboard' : '/register')}
             className="px-10 py-4 rounded-full bg-primary-lime hover:bg-primary-lime-dim text-on-primary font-black text-base sm:text-lg tracking-tight uppercase shadow-glow-xl hover:scale-105 transition-all cursor-pointer inline-flex items-center gap-3"
