@@ -5,10 +5,10 @@ import { queryClient } from './lib/queryClient';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
-import { DashboardPreview } from './pages/DashboardPreview';
+import { DashboardPage } from './pages/DashboardPage';
 import { ActivitiesPage } from './pages/ActivitiesPage';
 import { PlaceholderPage } from './pages/PlaceholderPage';
-import { LandingPage } from './pages/LandingPage';
+import { HomePage } from './pages/HomePage';
 import { AppLayout } from './components/layout/AppLayout';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -53,7 +53,7 @@ export function App() {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<LandingPage />} />
+            <Route path="/" element={<HomePage />} />
             <Route
               path="/login"
               element={
@@ -77,7 +77,7 @@ export function App() {
               element={
                 <ProtectedRoute>
                   <AppLayout>
-                    <DashboardPreview />
+                    <DashboardPage />
                   </AppLayout>
                 </ProtectedRoute>
               }
