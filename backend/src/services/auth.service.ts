@@ -48,19 +48,8 @@ export const register = async (input: RegisterInput) => {
 };
 
 export const login = async (input: LoginInput) => {
-  // Case-insensitive lookup for email
-  const matchingUser = await prisma.$queryRaw<Array<{ id: string }>>`
-    SELECT id FROM User 
-    WHERE LOWER(email) = LOWER(${input.email}) 
-    LIMIT 1
-  `;
-
-  if (matchingUser.length === 0) {
-    return null;
-  }
-
   const userWithHash = await prisma.user.findUnique({
-    where: { id: matchingUser[0].id },
+    where: { email: input.email },
     select: { ...publicUserSelect, passwordHash: true },
   });
 

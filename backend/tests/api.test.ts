@@ -60,7 +60,20 @@ describe("FitQuest API Integration Tests", () => {
 
       expect(res.status).toBe(200);
       expect(res.body.success).toBe(true);
-      expect(res.body.data.user.email).toBe(testEmail);
+      expect(res.body.data.user.email).toBe(testEmail.toLowerCase());
+    });
+
+    it("POST /api/auth/login - should authenticate case-insensitively with uppercase email", async () => {
+      const res = await request(app)
+        .post("/api/auth/login")
+        .send({
+          email: testEmail.toUpperCase(),
+          password: testPassword,
+        });
+
+      expect(res.status).toBe(200);
+      expect(res.body.success).toBe(true);
+      expect(res.body.data.user.email).toBe(testEmail.toLowerCase());
     });
 
     it("POST /api/auth/login - should reject invalid credentials", async () => {
