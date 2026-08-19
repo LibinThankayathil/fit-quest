@@ -21,20 +21,18 @@ export interface LeaderboardEntryDto {
 }
 
 /**
- * Formats a sport and value into a human-readable display label matching UI design
+ * Formats a sport into a human-readable display label matching UI design
  */
-function formatRecentActivityLabel(sport: string, value: number): string {
+function formatRecentActivityLabel(sport: string): string {
   switch (sport) {
     case "RUNNING":
-      if (value >= 9.5 && value <= 10.5) return "10k Run";
-      if (value >= 4.5 && value <= 5.5) return "5k Run";
-      return `${value >= 1 ? Math.round(value) : value.toFixed(1)}k Run`;
+      return "Run";
     case "CYCLING":
       return "Cycling";
     case "SWIMMING":
       return "Swim";
     case "GYM":
-      return value >= 60 ? "Weights" : "HIIT";
+      return "Gym";
     case "WALKING":
       return "Walk";
     case "DAILY_STEPS":
@@ -113,7 +111,7 @@ export async function getGlobalLeaderboard(
       recentActivity: latestActivity
         ? {
             sport: latestActivity.sport,
-            label: formatRecentActivityLabel(latestActivity.sport, latestActivity.value),
+            label: formatRecentActivityLabel(latestActivity.sport),
             recordedAt: latestActivity.recordedAt.toISOString(),
           }
         : null,
