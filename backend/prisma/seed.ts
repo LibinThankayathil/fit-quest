@@ -1,6 +1,6 @@
 import "dotenv/config";
 import bcrypt from "bcrypt";
-import { prisma } from "../lib/prisma";
+import { prisma } from "../src/lib/prisma";
 
 const DEFAULT_PASSWORD = "password123";
 

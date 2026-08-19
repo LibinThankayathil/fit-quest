@@ -1,5 +1,5 @@
 import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
-import { PrismaClient } from "../generated/prisma/client";
+import { PrismaClient } from "../../generated/prisma/client";
 
 // Singleton guard: in development, hot-reload creates new module instances.
 // Storing the client on `globalThis` ensures only one PrismaClient (and one

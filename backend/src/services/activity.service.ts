@@ -1,5 +1,5 @@
 import { MetricUnit, Sport } from "../../generated/prisma/client";
-import { prisma } from "../../lib/prisma";
+import { prisma } from "../lib/prisma";
 import { AppError } from "../utils/AppError";
 import { calculatePoints, getMetricCategory } from "../utils/scoring";
 import type { CreateActivityInput } from "../validators/activity.validator";
