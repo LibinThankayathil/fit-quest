@@ -1,13 +1,12 @@
 import type { NextFunction, Request, Response } from "express";
 import { verifyAccessToken } from "../lib/jwt";
-import { ACCESS_TOKEN_COOKIE } from "../utils/constants";
 
 export const authenticate = (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
-  const token = req.cookies[ACCESS_TOKEN_COOKIE];
+  const token = req.cookies["accessToken"];
 
   if (!token) {
     res.status(401).json({
@@ -34,7 +33,7 @@ export const optionalAuth = (
   _res: Response,
   next: NextFunction,
 ) => {
-  const token = req.cookies[ACCESS_TOKEN_COOKIE];
+  const token = req.cookies["accessToken"];
   if (token) {
     try {
       const payload = verifyAccessToken(token);

@@ -1,7 +1,6 @@
 import type { CookieOptions, NextFunction, Request, Response } from "express";
 import * as authService from "../services/auth.service";
 import type { AuthenticatedRequest } from "../types/express.d";
-import { ACCESS_TOKEN_COOKIE } from "../utils/constants";
 import { sendError, sendSuccess } from "../utils/response";
 import { loginSchema, registerSchema } from "../validators/auth.validator";
 
@@ -39,7 +38,7 @@ export const register = async (
 
   try {
     const { user, accessToken } = await authService.register(result.data);
-    res.cookie(ACCESS_TOKEN_COOKIE, accessToken, accessTokenCookieOptions);
+    res.cookie("accessToken", accessToken, accessTokenCookieOptions);
     return sendSuccess(res, 201, { user });
   } catch (error) {
     next(error);
@@ -69,7 +68,7 @@ export const login = async (
       return sendError(res, 401, "Invalid email or password");
     }
 
-    res.cookie(ACCESS_TOKEN_COOKIE, authResult.accessToken, accessTokenCookieOptions);
+    res.cookie("accessToken", authResult.accessToken, accessTokenCookieOptions);
     return sendSuccess(res, 200, { user: authResult.user });
   } catch (error) {
     next(error);
@@ -103,7 +102,7 @@ export const logout = async (
   res: Response,
   _next: NextFunction,
 ) => {
-  res.clearCookie(ACCESS_TOKEN_COOKIE, {
+  res.clearCookie("accessToken", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
