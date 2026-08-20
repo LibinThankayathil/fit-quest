@@ -1,0 +1,17 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Proxy API calls directly to your deployed backend (bypasses CORS & Cookie issues)
+[[redirects]]
+  from = "/api/*"
+  to = "https://fitquest-backend.onrender.com/api/:splat"
+  status = 200
+  force = true
+
+# React Router SPA routing fallback (prevents 404 on page refresh)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
